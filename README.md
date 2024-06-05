@@ -1,93 +1,167 @@
-# Android Kotlin
+<!--
+ # license: Copyright © 2011-2024 Fiuu. All Rights Reserved.
+ -->
 
+# Mobile_XDK_Fiuu_AndroidKotlin
 
+Fiuu Mobile Payment for .NET MAUI
 
-## Getting started
+<img src="https://user-images.githubusercontent.com/38641542/74424311-a9d64000-4e8c-11ea-8d80-d811cfe66972.jpg">
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+This is a complete and functional payment gateway Android Kotlin payment module that is ready to be implemented into Visual Studio / Android Studio as a FiuuXDK module. An example application project (KotlinXdkExample) is provided for FiuuXDK framework integration reference.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Recommended configurations
 
-## Add your files
+- Microsoft Visual Studio Community 2022 (For Windows) / Android Studio latest version
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+- Minimum Android API level: 19 ++
 
-```
-cd existing_repo
-git remote add origin https://git2u.merchant.razer.com/mobile/android-kotlin.git
-git branch -M main
-git push -uf origin main
-```
+- Minimum Android target version: Android 4.4
 
-## Integrate with your tools
+- Android SDK latest
 
-- [ ] [Set up project integrations](https://git2u.merchant.razer.com/mobile/android-kotlin/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+- Android AVD
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+- Create new Kotlin project and implement 'com.github.RazerMS:Mobile-XDK-RazerMS_Android_Library:<tag>'
+
+- Click on Sync Now or build project
+
+- copy this and put in onCreate function.
+
+- to call our payment page call this function on your button or any widget.
+
+```
+startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    if (result.resultCode == Activity.RESULT_OK) {
+        // There are no request codes
+        val data: Intent? = result.data
+        Log.d(
+            MOLPayActivity.MOLPAY,
+            "MOLPay result = " + data!!.getStringExtra(MOLPayActivity.MOLPayTransactionResult)
+        )
+        val tw = findViewById<View>(R.id.resultTV) as TextView
+        tw.text = data.getStringExtra(MOLPayActivity.MOLPayTransactionResult)
+    }
+}
+```
+
+## Sample Result
+
+#### Sample transaction result in JSON string:
+
+```
+
+{"status_code":"11","amount":"1.01","chksum":"34a9ec11a5b79f31a15176ffbcac76cd","pInstruction":0,"msgType":"C6","paydate":1459240430,"order_id":"3q3rux7dj","err_desc":"","channel":"Credit","app_code":"439187","txn_ID":"6936766"}
+
+Parameter and meaning:
+
+"status_code" - "00" for Success, "11" for Failed, "22" for *Pending.
+(*Pending status only applicable to cash channels only)
+"amount" - The transaction amount
+"paydate" - The transaction date
+"order_id" - The transaction order id
+"channel" - The transaction channel description
+"txn_ID" - The transaction id generated by Fiuu
+```
+
+*Notes: You may ignore other parameters and values not stated above*
+
+
+#### Sample error result in JSON string:
+
+```
+{"Error":"Communication Error"}
+
+Parameter and meaning:
+
+"Communication Error" - Error starting a payment process due to several possible reasons, please contact Fiuu support should the error persists.
+1) Internet not available
+2) API credentials (username, password, merchant id, verify key)
+3) Fiuu server offline.
+```
+
+## Prepare the Payment detail object
+
+```
+private fun startPaymentXDK() {
+    val paymentDetails: HashMap<String, Any> = HashMap()
+    paymentDetails[MOLPayActivity.mp_amount] = "1.10"
+
+    paymentDetails[MOLPayActivity.mp_username] = ""
+    paymentDetails[MOLPayActivity.mp_password] = ""
+    paymentDetails[MOLPayActivity.mp_merchant_ID] = ""
+    paymentDetails[MOLPayActivity.mp_app_name] = "mobile"
+    paymentDetails[MOLPayActivity.mp_verification_key] = ""
+
+    paymentDetails[MOLPayActivity.mp_order_ID] = Calendar.getInstance().getTimeInMillis()
+    paymentDetails[MOLPayActivity.mp_currency] = "MYR"
+    paymentDetails[MOLPayActivity.mp_country] = "MY"
+    paymentDetails[MOLPayActivity.mp_channel] = "multi"
+    paymentDetails[MOLPayActivity.mp_bill_description] = "bill description"
+    paymentDetails[MOLPayActivity.mp_bill_name] = "bill name"
+    paymentDetails[MOLPayActivity.mp_bill_email] = "@gmail.com"
+    paymentDetails[MOLPayActivity.mp_bill_mobile] = ""
+    paymentDetails[MOLPayActivity.mp_channel_editing] = false
+    paymentDetails[MOLPayActivity.mp_editing_enabled] = true
+    paymentDetails[MOLPayActivity.mp_express_mode] = false
+    paymentDetails[MOLPayActivity.mp_dev_mode] = false
+    paymentDetails[MOLPayActivity.mp_preferred_token] = "new"
+
+    val intent = Intent(this@MainActivity, MOLPayActivity::class.java)
+    intent.putExtra(MOLPayActivity.MOLPayPaymentDetails, paymentDetails)
+    startForResult.launch(intent)
+}
+
+```
+
+## Start the payment module
+
+```
+binding.fab.setOnClickListener {
+    startPaymentXDK()
+}
+
+```
+
+## Cash channel payment process (How does it work?)
+
+    This is how the cash channels work on XDK:
+
+    1) The user initiate a cash payment, upon completed, the XDK will pause at the “Payment instruction” screen, the results would return a pending status.
+
+    2) The user can then click on “Close” to exit the Fiuu XDK aka the payment screen.
+
+    3) When later in time, the user would arrive at say 7-Eleven to make the payment, the host app then can call the XDK again to display the “Payment Instruction” again, then it has to pass in all the payment details like it will for the standard payment process, only this time, the host app will have to also pass in an extra value in the payment details, it’s the “mp_transaction_id”, the value has to be the same transaction returned in the results from the XDK earlier during the completion of the transaction. If the transaction id provided is accurate, the XDK will instead show the “Payment Instruction” in place of the standard payment screen.
+
+    4) After the user done the paying at the 7-Eleven counter, they can close and exit Fiuu XDK by clicking the “Close” button again.
+
+## XDK built-in checksum validator caveats
+
+    All XDK come with a built-in checksum validator to validate all incoming checksums and return the validation result through the "mp_secured_verified" parameter. However, this mechanism will fail and always return false if merchants are implementing the private secret key (which the latter is highly recommended and prefereable.) If you would choose to implement the private secret key, you may ignore the "mp_secured_verified" and send the checksum back to your server for validation.
+
+## Private Secret Key checksum validation formula
+
+    chksum = MD5(mp_merchant_ID + results.msgType + results.txn_ID + results.amount + results.status_code + merchant_private_secret_key)
+
+## Resources
+- GitHub:     https://github.com/FiuuPayment
+- Website:    https://fiuu.com/
+- Twitter:    https://twitter.com/FiuuPayment
+- YouTube:    https://www.youtube.com/c/FiuuPayment
+- Facebook:   https://www.facebook.com/FiuuPayment/
+- Instagram:  https://www.instagram.com/FiuuPayment/
+
 
 ## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+Submit issue to this repository or email to our support@fiuu.com
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Merchant Technical Support / Customer Care : support@fiuu.com<br>
+Sales/Reseller Enquiry : sales@fiuu.com<br>
+Marketing Campaign : marketing@fiuu.com<br>
+Channel/Partner Enquiry : channel@fiuu.com<br>
+Media Contact : media@fiuu.com<br>
+R&D and Tech-related Suggestion : technical@fiuu.com<br>
+Abuse Reporting : abuse@fiuu.com
