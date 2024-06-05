@@ -24,7 +24,7 @@ This is a complete and functional payment gateway Android Kotlin payment module 
 
 ## Installation
 
-- Create new Kotlin project and implement 'com.github.RazerMS:Mobile-XDK-RazerMS_Android_Library:<tag>'
+- Create new Kotlin project and implement ```com.github.FiuuPayment/Mobile_XDK_Fiuu_Android_Kotlin:<tag>```
 
 - Click on Sync Now or build project
 
