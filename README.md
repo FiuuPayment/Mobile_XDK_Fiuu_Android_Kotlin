@@ -2,7 +2,7 @@
  # license: Copyright © 2011-2024 Fiuu. All Rights Reserved.
  -->
 
-# Mobile_XDK_Fiuu_AndroidKotlin
+# Mobile XDK Fiuu - Android Kotlin
 
 Fiuu Mobile Payment for Android Kotlin
 
