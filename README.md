@@ -4,7 +4,7 @@
 
 # Mobile_XDK_Fiuu_AndroidKotlin
 
-Fiuu Mobile Payment for .NET MAUI
+Fiuu Mobile Payment for Android Kotlin
 
 <img src="https://user-images.githubusercontent.com/38641542/74424311-a9d64000-4e8c-11ea-8d80-d811cfe66972.jpg">
 
